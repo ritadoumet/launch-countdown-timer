@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@700&display=swap" rel="stylesheet">
+
+  <title>Rita Doumet | Launch countdown timer</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    /*
+    .countdown {
+    width: 23%;
+    display: inline-block;
+    text-transform: uppercase;
+    flex: 0 1 auto;
+    justify-content: space-around;
+    padding: 0 1%;
+}
+    */
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Red Hat Text', sans-serif;
+      background-color: hsl(235, 16%, 14%);
+      color: white;
+      background-image: url('images/pattern-hills.svg'), url('images/bg-stars.svg');
+      background-repeat: no-repeat;
+      background-position: bottom;
+      height: 100vh;
+    }
+
+    h1 {
+      width: fit-content;
+      margin-right: auto;
+      margin-left: auto;
+      margin-top: 0;
+      padding-top: 100px;
+      letter-spacing: 7px;
+      text-transform: uppercase;
+      font-size: 20px;
+    }
+
+    main {
+      width: fit-content;
+      margin-right: auto;
+      margin-left: auto;
+      margin-top: 100px;
+      /*display: flex;*/
+      display: none;
+    }
+
+    .countdown {
+      width: 170px;
+      display: inline-block;
+      text-transform: uppercase;
+      flex: 0 1 auto;
+      justify-content: space-around;
+      padding: 0 20px;
+    }
+
+    .countdown p {
+      letter-spacing: 7px;
+      font-size: 14px;
+      color: hsl(237, 18%, 59%);
+      text-align: center;
+      position: relative;
+      top: -60px;
+    }
+
+    .calendar_top {
+      width: 100%;
+      text-align: center;
+      color: hsl(345, 95%, 68%);
+      font-size: 82px;
+      background-color: hsl(236, 21%, 26%);
+      height: 54px;
+      overflow: hidden;
+      padding-top: 16px;
+      border-radius: 7px 7px 0 0;
+      filter: brightness(0.8);
+    }
+
+    .calendar_bottom {
+      width: 100%;
+      text-align: center;
+      color: hsl(345, 95%, 68%);
+      font-size: 82px;
+      background-color: hsl(236, 21%, 26%);
+      height: 108px;
+      position: relative;
+      top: -70px;
+      z-index: -1;
+      padding: 30px auto;
+      overflow: hidden;
+      border-radius: 7px;
+      padding-top: 16px;
+      padding-bottom: 16px;
+      box-shadow: 0 10px hsl(234, 17%, 12%);
+    }
+
+    .calendar_top::before {
+      content: '.';
+      color: transparent;
+      background-color: hsl(234, 17%, 12%);
+      width: 8px;
+      height: 10px;
+      bottom: -5px;
+      z-index: 2;
+      position: absolute;
+      left: 0;
+      border-radius: 0 50% 50% 0;
+    }
+
+    .calendar_top::after {
+      content: '.';
+      color: transparent;
+      background-color: hsl(234, 17%, 12%);
+      width: 8px;
+      height: 10px;
+      bottom: -5px;
+      z-index: 2;
+      position: absolute;
+      right: 0;
+      border-radius: 50% 0 50% 0;
+    }
+
+    .calendar_bottom::before {
+      content: '.';
+      color: transparent;
+      background-color: hsl(234, 17%, 12%);
+      width: 8px;
+      height: 10px;
+      top: 65px;
+      z-index: 2;
+      position: absolute;
+      left: 0;
+      border-radius: 0 50% 50% 0;
+    }
+
+    .calendar_bottom::after {
+      content: '.';
+      color: transparent;
+      background-color: hsl(234, 17%, 12%);
+      width: 8px;
+      height: 10px;
+      top: 65px;
+      z-index: 2;
+      position: absolute;
+      right: 0;
+      border-radius: 50% 0 0 50%;
+    }
+
+    form {
+      width: 80%;
+      padding: 20px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    fieldset {
+      border-radius: 10px;
+      position: relative;
+    }
+
+    fieldset p {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    input {
+      width: 50%;
+      border-radius: 6px;
+      background-color: transparent;
+      margin-left: 10px;
+      caret-color: hsl(345, 95%, 68%);
+      color: white;
+      font-family: inherit;
+    }
+
+    input:focus-visible {
+      outline: 2px solid hsl(345, 95%, 68%);
+      outline-style: inset;
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type=submit] {
+      background-color: hsl(345, 95%, 68%);
+      border: none;
+      border-radius: 10px;
+      padding: 8px;
+      width: calc(100px + 10%);
+      font-family: inherit;
+      margin: 30px auto 10px auto;
+      display: inherit;
+      font-size: larger;
+      cursor: pointer;
+      box-shadow: 2px 2px 4px hsl(234, 17%, 12%);
+    }
+
+    input[type=submit]:hover {
+      filter: brightness(1.1);
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    legend {
+      color: hsl(345, 95%, 68%);
+      padding: 0 5px;
+    }
+
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+      position: fixed;
+      bottom: 10px;
+      right: 50%;
+      transform: translateX(50%);
+    }
+
+    .attribution a {
+      color: hsl(228, 45%, 44%);
+    }
+
+    @media only screen and (min-width:600px) {
+      fieldset {
+        padding: 10px 10%;
+      }
+
+      form {
+        width: 65%;
+      }
+
+    }
+
+    @media only screen and (max-width:600px) {
+      .countdown {
+        width: 23%;
+        display: inline-block;
+        text-transform: uppercase;
+        flex: 0 1 auto;
+        justify-content: space-around;
+        padding: 0 1%;
+      }
+
+      .calendar_top {
+        width: 100%;
+        text-align: center;
+        color: hsl(345, 95%, 68%);
+        font-size: 41px;
+        background-color: hsl(236, 21%, 26%);
+        height: 27px;
+        overflow: hidden;
+        padding-top: 8px;
+        border-radius: 7px 7px 0 0;
+        filter: brightness(0.8);
+      }
+
+      .calendar_bottom {
+        width: 100%;
+        text-align: center;
+        color: hsl(345, 95%, 68%);
+        font-size: 41px;
+        background-color: hsl(236, 21%, 26%);
+        height: 54px;
+        position: relative;
+        top: -35px;
+        z-index: -1;
+        padding: 30px auto;
+        overflow: hidden;
+        border-radius: 7px;
+        padding-top: 8px;
+        padding-bottom: 16px;
+        box-shadow: 0 10px hsl(234deg 17% 12%);
+      }
+
+      .countdown p {
+        letter-spacing: 2px;
+        font-size: 9px;
+        color: hsl(237, 18%, 59%);
+        text-align: center;
+        position: relative;
+        top: -30px;
+      }
+
+      .calendar_bottom::before {
+        content: '.';
+        color: transparent;
+        background-color: hsl(234, 17%, 12%);
+        width: 4px;
+        height: 5px;
+        top: 32.5px;
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        border-radius: 0 50% 50% 0;
+      }
+
+      .calendar_top::before {
+        content: '.';
+        color: transparent;
+        background-color: hsl(234, 17%, 12%);
+        width: 4px;
+        height: 5px;
+        bottom: -2.5px;
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        border-radius: 0 50% 50% 0;
+      }
+
+      .calendar_bottom::after {
+        content: '.';
+        color: transparent;
+        background-color: hsl(234, 17%, 12%);
+        width: 4px;
+        height: 5px;
+        top: 32.5px;
+        z-index: 2;
+        position: absolute;
+        right: 0;
+        border-radius: 50% 0 0 50%;
+      }
+
+      main {
+        width: 100%
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>We're launching soon</h1>
+  <form>
+    <fieldset>
+      <legend>Select the start of the countdown</legend>
+      <p>
+        <label>Days</label>
+        <input type="number" name="days" id="days" min=0 required>
+      </p>
+      <p>
+        <label>Hours</label>
+        <input type="number" name="hours" id="hours" min=0 max=23 required>
+      </p>
+      <p>
+        <label>Minutes</label>
+        <input type="number" name="minutes" id="minutes" min=0 max=59 required>
+      </p>
+      <p>
+        <label>Seconds</label>
+        <input type="number" name="seconds" id="seconds" min=0 max=59 required>
+      </p>
+      <input type="submit">
+    </fieldset>
+  </form>
+  <main>
+    <div class="countdown">
+      <div class="calendar_top" id="days2">14</div>
+      <div class="calendar_bottom" id="days1">14</div>
+      <p>Days</p>
+    </div>
+    <div class="countdown">
+      <div class="calendar_top" id="hours2">00</div>
+      <div class="calendar_bottom" id="hours1">00</div>
+      <p>Hours</p>
+    </div>
+    <div class="countdown">
+      <div class="calendar_top" id="minutes2">00</div>
+      <div class="calendar_bottom" id="minutes1">00</div>
+      <p>Minutes</p>
+    </div>
+    <div class="countdown">
+      <div class="calendar_top" id="seconds2">00</div>
+      <div class="calendar_bottom" id="seconds1">00</div>
+      <p>Seconds</p>
+    </div>
+  </main>
+
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+    Coded by <a href="#">Rita Doumet</a>.
+  </div>
+  <script>
+    document.getElementsByTagName("form")[0].addEventListener("submit", function () { submitForm(event) })
+    let i, j, k, l;
+    let seconds = 0;
+    let minutes = 0;
+    let hours = 0;
+    let days = 0;
+
+    function submitForm(event) {
+      seconds = document.getElementById("seconds").value;
+      minutes = document.getElementById("minutes").value;
+      hours = document.getElementById("hours").value;
+      days = document.getElementById("days").value;
+      document.getElementsByTagName("main")[0].style.display = "flex";
+      document.getElementsByTagName("form")[0].style.display = "none";
+      event.preventDefault();
+      i = setInterval(changeSeconds, 1000);
+
+      let waitMins = setTimeout(function () { j = changeMinutes(); setInterval(changeMinutes, 60000); }, 1000 * seconds);
+      let waitHours = setTimeout(function () { k = changeHours(); setInterval(changeHours, 3600000); }, 1000 * seconds + 60000 * minutes);
+      let waitDays = setTimeout(function () { l = changeDays(); setInterval(changeDays, 86400000); }, 1000 * seconds + 60000 * minutes + 3600000 * hours);
+
+      if (seconds < 10) {
+        document.getElementById("seconds1").innerHTML = '0' + seconds;
+        document.getElementById("seconds2").innerHTML = '0' + seconds;
+      }
+      else {
+        document.getElementById("seconds1").innerHTML = seconds;
+        document.getElementById("seconds2").innerHTML = seconds;
+      }
+      if (minutes < 10) {
+
+        document.getElementById("minutes1").innerHTML = '0' + minutes;
+        document.getElementById("minutes2").innerHTML = '0' + minutes;
+      }
+      else {
+        document.getElementById("minutes1").innerHTML = minutes;
+        document.getElementById("minutes2").innerHTML = minutes;
+      }
+      if (hours < 10) {
+        document.getElementById("hours1").innerHTML = '0' + hours;
+        document.getElementById("hours2").innerHTML = '0' + hours;
+      }
+      else {
+        document.getElementById("hours1").innerHTML = hours;
+        document.getElementById("hours2").innerHTML = hours;
+      }
+      if (days < 10) {
+        document.getElementById("days1").innerHTML = '0' + days;
+        document.getElementById("days2").innerHTML = '0' + days;
+      }
+      else {
+        document.getElementById("days1").innerHTML = days;
+        document.getElementById("days2").innerHTML = days;
+      }
+    }
+
+    function finishCountdown() {
+      console.log("done");
+      document.getElementsByTagName("main")[0].innerHTML = "<h1>Countdown is over!<h1>";
+    }
+    function changeSeconds() {
+      seconds = parseInt(seconds);
+      seconds--;
+      if (seconds == -1) {
+        if (minutes == 0 && hours == 0 && days == 0) {
+          finishCountdown();
+        }
+        else { seconds = 59; }
+      }
+      if (seconds < 10) {
+        seconds = '0' + seconds;
+      }
+      document.getElementById("seconds1").innerHTML = seconds;
+      document.getElementById("seconds2").innerHTML = seconds;
+      if (days == 0 && hours == 0 && minutes == 0 && seconds == 0) {
+        clearInterval(i);
+        finishCountdown();
+      }
+    }
+
+    function changeMinutes() {
+      minutes = parseInt(minutes);
+      minutes--;
+      if (minutes == -1 && ((days != 0 && days != -1) || (hours != 0 && hours != -1))) {
+        minutes = 59;
+      }
+      if (days == 0 && hours == 0 && (minutes == 0 || minutes == -1)) {
+        clearInterval(j);
+        minutes = 0;
+      }
+      if (minutes < 10) {
+        minutes = '0' + minutes;
+      }
+      document.getElementById("minutes1").innerHTML = minutes;
+      document.getElementById("minutes2").innerHTML = minutes;
+
+    }
+    function changeHours() {
+      hours = parseInt(hours);
+      hours--;
+      if (hours == -1 && days != 0 && days != -1) {
+        hours = 23;
+      }
+      else {
+        hours = 0;
+      }
+      if (hours < 10) {
+        hours = '0' + hours;
+      }
+      document.getElementById("hours1").innerHTML = hours;
+      document.getElementById("hours2").innerHTML = hours;
+      if (days == 0 && (hours == 0 || hours == -1)) {
+        hours = 0;
+        clearInterval(k);
+      }
+    }
+
+    function changeDays() {
+      days = parseInt(days);
+      days--;
+      if (days == -1) {
+        clearInterval(l);
+        days = 0;
+      }
+      if (days < 10) {
+        days = '0' + days;
+      }
+      document.getElementById("days1").innerHTML = days;
+      document.getElementById("days2").innerHTML = days;
+    }
+  </script>
+</body>
+
+</html>
